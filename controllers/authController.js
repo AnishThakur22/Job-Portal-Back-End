@@ -90,3 +90,28 @@ exports.login = async (req, res) => {
         res.status(500).json({ success: false, message: "Server error", error: error.message });
     }
 };
+
+
+exports.getMe = async (req, res) => {
+    try {
+        if (!req.user) {
+            return res.status(401).json({
+                success: false,
+                message: "Not authorized"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            user: req.user
+        });
+
+    } catch (error) {
+        console.error("Get user error:", error);
+        res.status(500).json({
+            success: false,
+            message: "Server error",
+            error: error.message
+        });
+    }
+};
